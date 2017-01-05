@@ -1,0 +1,7 @@
+name: InventoryGUI
+version: 1.0
+main: me.thanoxz.inventorygui.Main
+description: Just a quick test plugin!
+commands:
+    inventorygui:
+        description: use this command!
