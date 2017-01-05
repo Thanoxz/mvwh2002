@@ -1,0 +1,114 @@
+package me.thanoxz.inventorygui;
+
+import java.util.ArrayList;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+public class Events implements Listener{
+
+	Inventory menu = Bukkit.createInventory(null, 9, ChatColor.RED + "GUI");
+	
+	@SuppressWarnings("deprecation")
+	@EventHandler
+	public void onRightClick(PlayerInteractEvent e){
+		Player p = e.getPlayer();
+			
+			ItemStack item = new ItemStack(Material.BLAZE_POWDER);
+			ItemMeta meta = item.getItemMeta();
+			meta.setDisplayName("Hoi");
+			ArrayList<String> lore = new ArrayList<String>();
+			lore.add("Hallo");
+			meta.setLore(lore);
+			meta.getDisplayName();
+			item.setItemMeta(meta);
+			
+	    	ItemStack item1 = new ItemStack(Material.GOLD_BLOCK);
+			ItemMeta itm1 = item1.getItemMeta();
+			itm1.setDisplayName(ChatColor.RED + "Gamemode Survival");
+			ArrayList<String> lore1 = new ArrayList<String>();
+			lore1.add(ChatColor.GOLD + "Set your gamemode to survival!");
+			itm1.setLore(lore1);
+			itm1.getDisplayName();
+			item1.setItemMeta(itm1);
+			
+			ItemStack item2 = new ItemStack(Material.REDSTONE_BLOCK);
+			ItemMeta itm2 = item2.getItemMeta();
+			itm2.setDisplayName(ChatColor.RED + "Gamemode Creative");
+			ArrayList<String> lore2 = new ArrayList<String>();
+			lore2.add(ChatColor.GOLD + "Set your gamemode to creative!");
+			itm2.setLore(lore2);
+			itm2.getDisplayName();
+			item2.setItemMeta(itm2);
+
+			
+			menu.setItem(0, item1);
+			menu.setItem(1, item2);
+			
+			if(p.getItemInHand().equals(item)){
+				if(e.getAction()== Action.RIGHT_CLICK_AIR || e.getAction()== Action.RIGHT_CLICK_BLOCK){
+					if(p.hasPermission("inventorygui.openinventory")){
+						p.openInventory(menu);
+						p.sendMessage(ChatColor.GREEN + "Succesfully opened the Inventory GUI!");
+					} else{
+						p.sendMessage(ChatColor.RED + "You don't have the permissions to do this!");
+					}
+				}
+			}
+			}
+
+
+	@EventHandler
+	public void onInventoryClickEvent(InventoryClickEvent e){
+		Player p = (Player) e.getWhoClicked();
+		ItemStack clicked = e.getCurrentItem();
+		
+		ItemStack item1 = new ItemStack(Material.GOLD_BLOCK);
+		ItemMeta itm1 = item1.getItemMeta();
+		itm1.setDisplayName(ChatColor.RED + "Gamemode Survival");
+		ArrayList<String> lore1 = new ArrayList<String>();
+		lore1.add(ChatColor.GOLD + "Set your gamemode to survival!");
+		itm1.setLore(lore1);
+		itm1.getDisplayName();
+		item1.setItemMeta(itm1);
+		
+		ItemStack item2 = new ItemStack(Material.REDSTONE_BLOCK);
+		ItemMeta itm2 = item2.getItemMeta();
+		itm2.setDisplayName(ChatColor.RED + "Gamemode Creative");
+		ArrayList<String> lore2 = new ArrayList<String>();
+		lore2.add(ChatColor.GOLD + "Set your gamemode to creative!");
+		itm2.setLore(lore2);
+		itm2.getDisplayName();
+		item2.setItemMeta(itm2);
+		
+		if(e.getInventory().getName().equals(ChatColor.RED + "GUI")){
+				if(clicked.equals(item1)){
+					p.setGameMode(GameMode.SURVIVAL);
+					e.setCancelled(true);
+					p.closeInventory();
+				} else if(clicked.equals(item2)){
+					p.setGameMode(GameMode.CREATIVE);
+					e.setCancelled(true);
+				    p.closeInventory();
+				} else{
+					e.setCancelled(true);
+					p.closeInventory();
+				
+			}
+		}
+		
+	}
+	
+
+}
